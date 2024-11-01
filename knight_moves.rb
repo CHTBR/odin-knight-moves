@@ -1,15 +1,14 @@
-def num_of_knight_moves(start, goal)
-  queue = [[start, 0]]
+def knight_travels(start, goal)
+  queue = [[start, 0, []]]
   current = nil
   distance = nil
   while current != goal
-    current, distance = queue.pop
-    pp current
+    info = queue.pop
+    current, distance, parents = info
     connected = connected(current)
-    pp connected
-    connected.each { |vertex| queue.unshift [vertex, distance + 1] unless  vertex.nil?}
+    connected.each { |vertex| queue.unshift [vertex, distance + 1, parents + [current]] unless vertex.nil? }
   end
-  distance
+  parents + [current]
 end
 
 def connected(vertex)
@@ -32,4 +31,4 @@ def fits_in_grid?(num)
   num < 8 && num > -1
 end
 
-pp knight_travails([gets.chomp.to_i, gets.chomp.to_i], [gets.chomp.to_i, gets.chomp.to_i])
+pp knight_travels([gets.chomp.to_i, gets.chomp.to_i], [gets.chomp.to_i, gets.chomp.to_i])
